@@ -19,7 +19,7 @@ count=0
 while [[ "$rsum" != "$hsum" && "$count" < 3 ]]
 do
 	count=$(($count+1))
-	rsh $remote tar cfP /home/$user/$name.tar -C $targetway .
+	ssh $remote tar cfP /home/$user/$name.tar -C $targetway .
 	mkdir -p $dist
 	timeout 5m scp $remote:/home/$user/$name.tar $dist
 	rsum=$( rsh $remote md5sum $name.tar | cut -f1 -d' ' )
@@ -28,7 +28,7 @@ do
 		then
 			cd $dist
 			tar xfP $name.tar
-			echo " $adr/$targetway was copy successfully in $dist " >> $4/$adr/log
+			echo " $adr/$targetway was successfully copied in $dist " >> $4/$adr/log
 		else
 			cd $dist
 			echo " ATTENTION, it was error in copy file frome remote PC (mistake in md5 summ, maby copy was), if this like error is 3 time in row, so copy was unsuccesfull " >> $4/$adr/log
