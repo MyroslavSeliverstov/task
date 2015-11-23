@@ -1,0 +1,11 @@
+[Unit]
+Description=Firwall
+After=network.target
+
+[Service]
+ExecStart=/etc/init.d/ufw start
+ExecStop=/etc/init.d/ufw stop
+ExecReload=/etc/init.d/ufw reload
+
+[Install]
+WantedBy=multi-user.target
