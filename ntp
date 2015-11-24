@@ -1,0 +1,14 @@
+[Unit]
+Description=NTPmain
+After=network.target auditd.service
+
+[Service]
+Type=forking
+PIDFile=/home/mir/PID
+ExecStart=/etc/init.d/ntp start
+ExecStop=/etc/init.d/ntp stop
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=ntp.service
