@@ -1,11 +1,12 @@
 [Unit]
-Description=OpenBSD Secure Shell server
+Description=Second SSHD
 After=network.target auditd.service
 ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
 
 [Service]
-EnvironmentFile=-/etc/default/ssh
-ExecStart=/usr/sbin/sshd1 -p 2223
+Type=forking
+EnvironmentFile=-/etc/default/ssh2
+ExecStart=/usr/sbin/sshd $SSHD_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
@@ -13,3 +14,13 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 Alias=sshd2.service
+
+#What is in /etc/default/ssh2
+# Options to pass to sshd
+SSHD_OPTS=-E /etc/ssh/log2 -f /etc/ssh/sshd_config2
+
+What is in /etc/ssh/sshd_config2
+...
+# What ports, IPs and protocols we listen for
+Port 2223
+...
